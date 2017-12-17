@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
+
+
 namespace ASPTask5
 {
     public class Program
@@ -19,6 +21,10 @@ namespace ASPTask5
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile("config/config.json");
+                })
                 .UseStartup<Startup>()
                 .Build();
     }

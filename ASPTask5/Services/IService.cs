@@ -1,5 +1,7 @@
 ﻿using ASPTask5.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ASPTask5.Services
 {
@@ -14,32 +16,46 @@ namespace ASPTask5.Services
 
     public class Service : IService
     {
-        private static List<StudentModel> listOfStudents = new List<StudentModel>();
+        public readonly StudentContext _context;
 
+        public Service(StudentContext context)
+        {
+            _context = context;
+        }
 
         public List<StudentModel> GetList()
         {
+            List<StudentModel> listOfStudents = _context.Students.ToList();
             return listOfStudents;
         }
 
         public void AddStudent(StudentModel student)
         {
-            listOfStudents.Add(student);
+            _context.Students.Add(student);
+            _context.SaveChanges();
         }
 
         public StudentModel GetStudent(int id)
         {
-            return listOfStudents[id];
+            StudentModel student = _context.Students.Find(id);
+            return student;
         }
 
         public void SetStudent(int id, StudentModel student)
         {
-            listOfStudents[id] = student;
+            StudentModel studentToUpdate = _context.Students.Find(id);
+            studentToUpdate.Group = student.Group;
+            studentToUpdate.Name = student.Name;
+            studentToUpdate.Age = student.Age;
+            _context.SaveChanges();
         }
 
         public void DeleteStudent(int id)
         {
-            listOfStudents.Remove(listOfStudents[id]);
+            StudentModel student = _context.Students.Find(id);
+            _context.Students.Remove(student);
+            _context.SaveChanges();
         }
     }
+
 }

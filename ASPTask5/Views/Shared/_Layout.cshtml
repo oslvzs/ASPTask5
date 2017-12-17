@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@using ASPTask5.Options;
+@using Microsoft.Extensions.Options;
+@inject IOptions<CustomOptions> CustomOption;
 <html>
 <head>
     <meta charset="utf-8" />
@@ -34,7 +37,8 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - ASPTask5</p>
+            <p>@CustomOption.Value.Name</p>
+            <p>@CustomOption.Value.Mail</p>
         </footer>
     </div>
 
