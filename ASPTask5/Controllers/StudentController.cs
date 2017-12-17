@@ -70,7 +70,7 @@ namespace ASPTask5.Controllers
             if (ModelState.IsValid)
             {
                 _service.SetStudent(id, model);
-                return RedirectToAction("Details", id);
+                return RedirectToAction(nameof(Index));
             }
             else
             {
